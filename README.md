@@ -5,3 +5,6 @@
 3) *Cold Observable*: Has the producer created inside the observable, so any subscription on cold observable have its own seperate producer each time it gets subscribed to. This means a producer can only send to one subsciption (observer) making it unicast.
 4) *Hot Observable*: Has the producer outside the observable. Any number of subscription will share the reference to the producer. Since the producer is outside of the observable we cannot teardown the producer. For this particular reason we do not use the hot observable. But rather make a cold observable hot
 5) `share()` operator will recycle dead subjects to enable resubscription to the resulting observable.
+6) *Warm Observable*: Has more than one producers, one outside, another inside Observable. This maybe necessary when a multiplexed web socket for example, must share a socket, but send its own subscription and filter out a data stream.
+
+
