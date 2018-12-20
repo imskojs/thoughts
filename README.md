@@ -9,5 +9,5 @@
 7) `throttleTime`: emits first value waits for a given time. repeat
 8) `debounceTime`: emits latest value after given time and no more event happens. everytime event happens time is reset. repeat.
 9) `auditTime`: Similar to `debounceTime` but do not reset time. Emits latest value after given time. repeat.
-
+10) `ng2-stompjs` uses `rx-stomp` which uses `stomp.js` which can be used together with `sock.js` (a polyfill)
 
