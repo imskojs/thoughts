@@ -21,5 +21,5 @@ type ColdObservable = Observable
 type HotObservalbe = Observable
 
 const myHotObservable$: HotObservable = rxStompService$.watch('/room/messages');
-const myColdObservalbe$: ColdObservable = http.get('user/id');
+const myColdObservalbe$: ColdObservable = http.get('http://meh.com/user/id');
 ```
