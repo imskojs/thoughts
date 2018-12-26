@@ -10,7 +10,16 @@
 8) `debounceTime`: emits latest value after given time and no more event happens. everytime event happens time is reset. repeat.
 9) `auditTime`: Similar to `debounceTime` but do not reset time. Emits latest value after given time. repeat.
 10) `ng2-stompjs` uses `rx-stomp` which uses `stomp.js` which can be used together with `sock.js`
-  * `sock.js` is a polyfill for websocket
-  * `stomp.js` is a implementaion of a STOMP protocol on top of Websockets tansport layer.
-  * `rx-stomp` exposes `stomp.js` props and methods as observables.
-  * `ng2-stompjs` uses `rx-stomp` to make available injectable services.
+    * `sock.js` is a polyfill for websocket
+    * `stomp.js` is a implementaion of a STOMP protocol on top of Websockets tansport layer.
+    * `rx-stomp` exposes `stomp.js` props and methods as observables.
+    * `ng2-stompjs` uses `rx-stomp` to make available injectable services.  
+11) Current problem when working with observables is guessing whether it is Cold or Hot. In my opinion
+we should make two types to distinguish this, for example;
+```ts
+type ColdObservable = Observable
+type HotObservalbe = Observable
+
+const myHotObservable$: HotObservable = rxStompService$.watch('/room/messages');
+const myColdObservalbe$: ColdObservable = http.get('user/id');
+```
