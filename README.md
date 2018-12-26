@@ -20,6 +20,6 @@ we should make two types to distinguish this, for example;
 type ColdObservable = Observable
 type HotObservalbe = Observable
 
-const myHotObservable$: HotObservable = rxStompService$.watch('/room/messages');
+const myHotObservable$: HotObservable = rxStompService.watch('/room/messages');
 const myColdObservalbe$: ColdObservable = http.get('http://meh.com/user/id');
 ```
