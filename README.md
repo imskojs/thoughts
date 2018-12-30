@@ -32,7 +32,7 @@ const myComposedObservable$ = merge(x.obs1, myOtherObservable$)
 cancelSub$.next('Unsub')  // this does not kill myObservable$, just unsubscribes existing Observer
 delete x.obs1  // deletes one reference to myObservable$ another refrence exists as `merge` used x.obs1 before deletion.
 
-// Instead of reusing myObservable$ we create another exactly same observable in difference memory location.
+// Instead of reusing myObservable$ we create another exactly the same observable in a difference memory location.
 if(!x.obs1) {
   x.obs1 = myNewObservable$
 }
