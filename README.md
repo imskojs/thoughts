@@ -17,9 +17,25 @@
 11) Current problem when working with observables is guessing whether it is Cold or Hot. In my opinion
 we should make two types to distinguish this, for example;
 ```ts
-type ColdObservable = Observable
-type HotObservalbe = Observable
+type ColdObservable<T> = Observable<T>
+type HotObservalbe<T> = Observable<T>
 
-const myHotObservable$: HotObservable = rxStompService.watch('/room/messages');
-const myColdObservalbe$: ColdObservable = http.get('http://meh.com/user/id');
+const myHotObservable$: HotObservable<Data> = rxStompService.watch('/room/messages');
+const myColdObservalbe$: ColdObservable<Data> = http.get('http://meh.com/user/id');
+```
+12) It's generally a bad idea to delete an Observable. Since Observable is really just a function, it will be passed around by reference hence deleting it with something like `delete` keyword will only delete the current reference. Since observables are usually composed together to make other observables, other references to the same observable will most likely exist. This may lead to memory leak.  For example  
+```ts
+const x = {obs1: myObservable$.pipe(takeUntil(cancelSub$)) }
+const myComposedObservable$ = merge(x.obs1, myOtherObservable$)
+
+// Some cancelling logic
+cancelSub$.next('Unsub')  // this does not kill myObservable$, just unsubscribes existing Observer
+delete x.obs1  // deletes one reference to myObservable$ another refrence exists as `merge` used x.obs1 before deletion.
+
+// Instead of reusing myObservable$ we create another exactly same observable in difference memory location.
+if(!x.obs1) {
+  x.obs1 = myNewObservable$
+}
+// Now we have two observables doing exactly the same thing in different memory locations leading to memory leak.
+
 ```
