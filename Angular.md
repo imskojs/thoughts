@@ -15,11 +15,11 @@
     * providers have global scope, i.e. one injector  
     * Component `providers` is an independent provider, only a component and its tree can see it. Each instance of the component has a new instance of the provider.    
 * In both lazy loaded module and eagerly loaded module, if some module is imported in both the root module and feature module,  there could be a problem. If importee module contains `declarations` and no `providers` then it's all good but if `providers` is defined in an importee module then following unintentionality would happen;     
-      * If service of importee module is used in root module, then;    
-               * Lazy loaded module would create seperate injector and instantiate new local scoped importee service    
-               * Eagerly loaded module would try to overwrite the already imported service possibly causing error.    
-      * If service of importee module is not used in root module, then;    
-               * Same behaviour as above, i.e. Lazy loaded module would create seperate injector and instantiate new local scoped importee service    
-               * Eagerly loaded module would create a service that is injectable at root level. No error but probably not intented behaviour    
+  * If service of importee module is used in root module, then;    
+    * Lazy loaded module would create seperate injector and instantiate new local scoped importee service    
+    * Eagerly loaded module would try to overwrite the already imported service possibly causing error.    
+  * If service of importee module is not used in root module, then;    
+    * Same behaviour as above, i.e. Lazy loaded module would create seperate injector and instantiate new local scoped importee service    
+    * Eagerly loaded module would create a service that is injectable at root level. No error but probably not intented behaviour    
 Whatever the case, importing a module that has a provider defined in it would most likely cause a problem. That's why when making a module that defines `providers` we should have a way to decide whether to include `providers` defined in the module or not.  
 * The same module can be configured with `forRoot()` (by convention, it can be any static function) to make it suitable for loading it in root module. `forRoot` is a static method in the module definition that returns extra providers that should be included it were to be imported within the root module.
