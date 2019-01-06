@@ -2,12 +2,12 @@
 
 * Components in `entryComponents` array are not tree shaked (this means non-entry components are tree shaked even if it is defined in the `declarations` array if not used). Components defined in Router, or defined in `bootstrap` array have the same effect as defining them in `entryComponents` array.  
 * For services use;
- ```ts
- @Injectable({providedIn: 'root'})
- // or
- @Injectable({providedIn: SomeModule})
- ```
- As it will be tree shaked if unused.  Does this mean services defined in `providers` array are not tree shaked even if unused?  
+   ```ts
+   @Injectable({providedIn: 'root'})
+   // or
+   @Injectable({providedIn: SomeModule})
+   ```
+   As it will be tree shaked if unused.  Does this mean services defined in `providers` array are not tree shaked even if unused?  
 * Lazy Loaded Module: 
     * Providers are scoped to a module where service is defined. i.e multiple injectors.
     * The router adds all of the providers from the root injector to the child injector. Hence root injector can be used with lazy loaded modules, but it follows the same `__proto__` pattern of JS, where it looks for local injector if it is there it will use that if not it will use the parent injector and so on. 
